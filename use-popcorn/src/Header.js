@@ -1,13 +1,7 @@
 import { useState } from "react";
 
-export default function Header() {
-  return (
-    <nav className="nav-bar">
-      <Logo />
-      <Search />
-      <Results />
-    </nav>
-  );
+export default function Header({ children }) {
+  return <nav className="nav-bar">{children}</nav>;
 }
 
 function Logo() {
@@ -32,10 +26,12 @@ function Search() {
   );
 }
 
-function Results() {
+function Results({ movies }) {
   return (
     <p className="num-results">
-      Found <strong>X</strong> results
+      Found <strong>{movies.length}</strong> results
     </p>
   );
 }
+
+export { Logo, Search, Results };
