@@ -41,4 +41,8 @@ function Movie({ movie }) {
   );
 }
 
-export { MoviesList };
+function Loader() {
+  return <p className="loader">Loading...</p>;
+}
+
+export { MoviesList, Loader };
