@@ -3,7 +3,11 @@ import { useEffect, useState } from "react";
 import { tempMovieData, tempWatchedData } from "./data";
 import Header, { Logo, Results, Search } from "./Header";
 import Box, { Error as ErrorMessage, Loader, MoviesList } from "./ListBox";
-import WatchedBox, { Summary, WatchedMoviesList } from "./WatchedBox";
+import WatchedBox, {
+  MovieDetails,
+  Summary,
+  WatchedMoviesList,
+} from "./WatchedBox";
 
 const apiKey = process.env.REACT_APP_OMDB_API_KEY;
 
@@ -13,6 +17,13 @@ export default function App() {
   const [watched, setWatched] = useState(tempWatchedData);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [selectedMovieId, setSelectedMovieId] = useState(null);
+
+  const handleSelectMovie = (id) =>
+    setSelectedMovieId((selectedMovieId) =>
+      selectedMovieId === id ? null : id
+    );
+  const handleCloseMovie = () => setSelectedMovieId(null);
 
   useEffect(
     function () {
@@ -61,12 +72,23 @@ export default function App() {
           ) : isLoading ? (
             <Loader />
           ) : (
-            <MoviesList movies={movies} />
+            <MoviesList movies={movies} onMovieSelect={handleSelectMovie} />
           )}
         </Box>
         <Box>
-          <Summary watched={watched} />
-          <WatchedMoviesList watched={watched} />
+          {selectedMovieId ? (
+            <MovieDetails
+              movieId={selectedMovieId}
+              onCloseMovie={handleCloseMovie}
+              apiKey={apiKey}
+            />
+          ) : (
+            <>
+              {" "}
+              <Summary watched={watched} />
+              <WatchedMoviesList watched={watched} />
+            </>
+          )}
         </Box>
       </main>
     </>

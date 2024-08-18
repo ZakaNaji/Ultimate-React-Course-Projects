@@ -1,5 +1,5 @@
-import { Children, useState } from "react";
-import { tempWatchedData } from "./data";
+import { Children, useEffect, useState } from "react";
+import StarRating from "./StarRating";
 
 function Summary({ watched }) {
   const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
@@ -64,7 +64,50 @@ function WatchedMovie({ movie }) {
   );
 }
 
-export { Summary, WatchedMoviesList };
+function MovieDetails({ movieId, onCloseMovie, apiKey }) {
+  const [movie, setMovie] = useState({});
+  useEffect(function () {
+    (async function () {
+      const resp = await fetch(
+        `http://www.omdbapi.com/?apikey=${apiKey}&i=${movieId}`
+      );
+      const data = await resp.json();
+      setMovie(data);
+    })();
+  }, []);
+  return (
+    <div className="details">
+      <header>
+        <button className="btn-back" onClick={onCloseMovie}>
+          &larr;
+        </button>
+        <img src={movie.Poster} alt="" />
+        <div className="details-overview">
+          <h2>{movie.Title}</h2>
+          <p>
+            {movie.Released} &bull; {movie.Runtime}
+          </p>
+          <p>{movie.Genre}</p>
+          <p>
+            <span>⭐</span> {movie.imdbRating} IMDB rating
+          </p>
+        </div>
+      </header>
+      <section>
+        <div className="rating">
+          <StarRating maxRating={10} size={24} />
+        </div>
+        <p>
+          <em>{movie.Plot}</em>
+        </p>
+        <p>Starring: {movie.Actors}</p>
+        <p>Director: {movie.Director}</p>
+      </section>
+    </div>
+  );
+}
+
+export { Summary, WatchedMoviesList, MovieDetails };
 
 const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
