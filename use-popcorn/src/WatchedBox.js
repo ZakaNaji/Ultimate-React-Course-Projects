@@ -66,15 +66,18 @@ function WatchedMovie({ movie }) {
 
 function MovieDetails({ movieId, onCloseMovie, apiKey }) {
   const [movie, setMovie] = useState({});
-  useEffect(function () {
-    (async function () {
-      const resp = await fetch(
-        `http://www.omdbapi.com/?apikey=${apiKey}&i=${movieId}`
-      );
-      const data = await resp.json();
-      setMovie(data);
-    })();
-  }, []);
+  useEffect(
+    function () {
+      (async function () {
+        const resp = await fetch(
+          `http://www.omdbapi.com/?apikey=${apiKey}&i=${movieId}`
+        );
+        const data = await resp.json();
+        setMovie(data);
+      })();
+    },
+    [movieId]
+  );
   return (
     <div className="details">
       <header>
