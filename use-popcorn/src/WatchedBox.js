@@ -31,17 +31,21 @@ function Summary({ watched }) {
   );
 }
 
-function WatchedMoviesList({ watched, isOpen2 }) {
+function WatchedMoviesList({ watched, onDeleteWatched }) {
   return (
     <ul className="list">
       {watched.map((movie) => (
-        <WatchedMovie movie={movie} key={movie.imdbID} />
+        <WatchedMovie
+          movie={movie}
+          key={movie.imdbID}
+          onDeleteWatched={onDeleteWatched}
+        />
       ))}
     </ul>
   );
 }
 
-function WatchedMovie({ movie }) {
+function WatchedMovie({ movie, onDeleteWatched }) {
   return (
     <li key={movie.imdbID}>
       <img src={movie.Poster} alt={`${movie.Title} poster`} />
@@ -59,13 +63,41 @@ function WatchedMovie({ movie }) {
           <span>⏳</span>
           <span>{movie.runtime} min</span>
         </p>
+        <button
+          className="btn-delete"
+          onClick={() => onDeleteWatched(movie.imdbID)}
+        >
+          X
+        </button>
       </div>
     </li>
   );
 }
 
-function MovieDetails({ movieId, onCloseMovie, apiKey }) {
+function MovieDetails({
+  movieId,
+  onCloseMovie,
+  apiKey,
+  onAddWatched,
+  isAlreadyWatched,
+}) {
   const [movie, setMovie] = useState({});
+  const [rating, setRating] = useState("");
+
+  const handleAddWatched = () => {
+    const watchedMovie = {
+      imdbID: movieId,
+      Title: movie.Title,
+      Poster: movie.Poster,
+      Released: movie.Released,
+      imdbRating: movie.imdbRating,
+      runtime: movie.Runtime.split(" ")[0],
+      userRating: rating,
+    };
+    onAddWatched(watchedMovie);
+    onCloseMovie();
+  };
+
   useEffect(
     function () {
       (async function () {
@@ -97,9 +129,17 @@ function MovieDetails({ movieId, onCloseMovie, apiKey }) {
         </div>
       </header>
       <section>
-        <div className="rating">
-          <StarRating maxRating={10} size={24} />
-        </div>
+        {!isAlreadyWatched && (
+          <div className="rating">
+            <StarRating maxRating={10} size={24} onSetRating={setRating} />
+
+            {rating > 0 && (
+              <button className="btn-add" onClick={handleAddWatched}>
+                + Add to list
+              </button>
+            )}
+          </div>
+        )}
         <p>
           <em>{movie.Plot}</em>
         </p>

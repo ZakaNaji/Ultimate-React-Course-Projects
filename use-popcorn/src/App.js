@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 
-import { tempMovieData, tempWatchedData } from "./data";
 import Header, { Logo, Results, Search } from "./Header";
 import Box, { Error as ErrorMessage, Loader, MoviesList } from "./ListBox";
 import WatchedBox, {
@@ -14,16 +13,24 @@ const apiKey = process.env.REACT_APP_OMDB_API_KEY;
 export default function App() {
   const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState(tempWatchedData);
+  const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [selectedMovieId, setSelectedMovieId] = useState(null);
+
+  const isAlreadyWatched = () =>
+    watched.some((movie) => movie.imdbID === selectedMovieId);
+
+  const onDeleteWatched = (id) =>
+    setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
 
   const handleSelectMovie = (id) =>
     setSelectedMovieId((selectedMovieId) =>
       selectedMovieId === id ? null : id
     );
   const handleCloseMovie = () => setSelectedMovieId(null);
+  const handleAddWatched = (movie) =>
+    setWatched((watched) => [...watched, movie]);
 
   useEffect(
     function () {
@@ -81,12 +88,17 @@ export default function App() {
               movieId={selectedMovieId}
               onCloseMovie={handleCloseMovie}
               apiKey={apiKey}
+              onAddWatched={handleAddWatched}
+              isAlreadyWatched={isAlreadyWatched()}
             />
           ) : (
             <>
               {" "}
               <Summary watched={watched} />
-              <WatchedMoviesList watched={watched} />
+              <WatchedMoviesList
+                watched={watched}
+                onDeleteWatched={onDeleteWatched}
+              />
             </>
           )}
         </Box>
