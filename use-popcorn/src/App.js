@@ -32,6 +32,18 @@ export default function App() {
   const handleAddWatched = (movie) =>
     setWatched((watched) => [...watched, movie]);
 
+  useEffect(function () {
+    const keyDownCallback = (event) => {
+      if (event.key === "Escape") {
+        handleCloseMovie();
+      }
+    };
+    document.addEventListener("keydown", keyDownCallback);
+    return function () {
+      document.removeEventListener("keydown", keyDownCallback);
+    };
+  }, []);
+
   useEffect(
     function () {
       if (query.length < 3) {
