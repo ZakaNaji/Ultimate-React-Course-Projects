@@ -110,6 +110,16 @@ function MovieDetails({
     },
     [movieId]
   );
+
+  useEffect(
+    function () {
+      document.title = movie.Title || "usePopcorn";
+      return () => {
+        document.title = "usePopcorn";
+      };
+    },
+    [movie.Title]
+  );
   return (
     <div className="details">
       <header>
