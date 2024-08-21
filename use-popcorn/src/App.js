@@ -13,7 +13,10 @@ const apiKey = process.env.REACT_APP_OMDB_API_KEY;
 export default function App() {
   const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState([]);
+  const [watched, setWatched] = useState(() => {
+    const watched = localStorage.getItem("watched");
+    return watched ? JSON.parse(watched) : [];
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [selectedMovieId, setSelectedMovieId] = useState(null);
@@ -87,6 +90,9 @@ export default function App() {
     [query]
   );
 
+  useEffect(() => {
+    localStorage.setItem("watched", JSON.stringify(watched));
+  }, [watched]);
   return (
     <>
       <Header>
