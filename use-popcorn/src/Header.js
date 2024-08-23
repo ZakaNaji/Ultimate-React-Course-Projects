@@ -25,7 +25,7 @@ function Search({ query, setQuery }) {
     };
     document.addEventListener("keydown", callBack);
     return () => document.removeEventListener("keydown", callBack);
-  }, []);
+  }, [setQuery]);
   return (
     <input
       className="search"
