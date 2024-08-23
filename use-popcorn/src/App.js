@@ -8,6 +8,7 @@ import WatchedBox, {
   WatchedMoviesList,
 } from "./WatchedBox";
 import { useLocalStorage } from "./useLocalStrorage";
+import { useAddEventListener } from "./useAddEventListener";
 
 const apiKey = process.env.REACT_APP_OMDB_API_KEY;
 
@@ -33,17 +34,12 @@ export default function App() {
   const handleAddWatched = (movie) =>
     setWatched((watched) => [...watched, movie]);
 
-  useEffect(function () {
-    const keyDownCallback = (event) => {
-      if (event.key === "Escape") {
-        handleCloseMovie();
-      }
-    };
-    document.addEventListener("keydown", keyDownCallback);
-    return function () {
-      document.removeEventListener("keydown", keyDownCallback);
-    };
-  }, []);
+  const keyDownCallback = (event) => {
+    if (event.key === "Escape") {
+      handleCloseMovie();
+    }
+  };
+  useAddEventListener("keydown", keyDownCallback);
 
   useEffect(
     function () {

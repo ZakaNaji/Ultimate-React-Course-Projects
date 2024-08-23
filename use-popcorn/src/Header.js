@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useAddEventListener } from "./useAddEventListener";
 
 export default function Header({ children }) {
   return <nav className="nav-bar">{children}</nav>;
@@ -15,17 +16,14 @@ function Logo() {
 
 function Search({ query, setQuery }) {
   const inputRef = useRef(null);
-  useEffect(() => {
-    const callBack = (e) => {
-      if (document.activeElement === inputRef.current) return;
-      if (e.key === "Enter") {
-        inputRef.current.focus();
-        setQuery("");
-      }
-    };
-    document.addEventListener("keydown", callBack);
-    return () => document.removeEventListener("keydown", callBack);
-  }, [setQuery]);
+  const callBack = (e) => {
+    if (document.activeElement === inputRef.current) return;
+    if (e.key === "Enter") {
+      inputRef.current.focus();
+      setQuery("");
+    }
+  };
+  useAddEventListener("keydown", callBack);
   return (
     <input
       className="search"
