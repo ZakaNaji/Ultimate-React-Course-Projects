@@ -1,13 +1,25 @@
 import React from "react";
 
-export default function FinishScreen({ points, totalAvailablePoints }) {
+export default function FinishScreen({
+  points,
+  totalAvailablePoints,
+  dispatch,
+}) {
   return (
-    <p className="result">
-      {getImpressions(getPercentage(points, totalAvailablePoints))}
-      You have finished the quiz! <br />
-      Your score is: {points} out of {totalAvailablePoints} (
-      {getPercentage(points, totalAvailablePoints)}%)
-    </p>
+    <>
+      <p className="result">
+        {getImpressions(getPercentage(points, totalAvailablePoints))}
+        You have finished the quiz! <br />
+        Your score is: {points} out of {totalAvailablePoints} (
+        {getPercentage(points, totalAvailablePoints)}%)
+      </p>
+      <button
+        className="btn btn-ui"
+        onClick={() => dispatch({ type: "reset" })}
+      >
+        Reset
+      </button>
+    </>
   );
 }
 

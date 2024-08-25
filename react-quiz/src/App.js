@@ -45,6 +45,8 @@ function reducer(state, action) {
         ...state,
         status: "finished",
       };
+    case "reset":
+      return { ...initialState, questions: state.questions, status: "ready" };
     default:
       return state;
   }
@@ -109,6 +111,7 @@ export default function App() {
           <FinishScreen
             points={points}
             totalAvailablePoints={totalAvailablePoints}
+            dispatch={dispatch}
           />
         )}
       </Main>
