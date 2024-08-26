@@ -1,23 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import { useReducer } from "react";
+import "./App.css";
+
+const initialState = {
+  balance: 0,
+  loan: 0,
+};
+
+const reducer = (state, action) => {};
 
 function App() {
+  const [{ balance, loan }, dispatch] = useReducer(reducer, initialState);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>useReducer bank account</h1>
+      <div>Balance: X</div>
+      <div>Loan: Y</div>
+      <div>
+        <button type="button">open account</button>
+      </div>
+      <div>
+        <button type="button">Diposite X</button>
+      </div>
+      <div>
+        <button type="button">Widraw x</button>
+      </div>
+      <div>
+        <button type="button">Request a loan of x</button>
+      </div>
+      <div>
+        <button type="button">Pay loan</button>
+      </div>
+      <div>
+        <button type="button">Close account</button>
+      </div>
     </div>
   );
 }
