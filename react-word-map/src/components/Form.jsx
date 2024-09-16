@@ -7,6 +7,8 @@ import Button from "./Button";
 import BackButton from "./BackButton";
 import { useUrlLocation } from "../hooks/useUrlLocation";
 import { getData } from "../utils/utilities";
+import Message from "./Message";
+import Spinner from "./Spinner";
 
 const BASE_URL = "https://api.bigdatacloud.net/data/reverse-geocode-client";
 
@@ -25,22 +27,34 @@ function Form() {
   const [notes, setNotes] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [emoji, setEmoji] = useState("");
+  const [error, setError] = useState("");
   const [lat, lng] = useUrlLocation();
 
   useEffect(() => {
     const url = `${BASE_URL}?latitude=${lat}&longitude=${lng}`;
+    setError("");
     getData(
       url,
       (data) => {
-        console.log(data);
+        if (!data.countryName) {
+          throw new Error("Country not found");
+        }
         setCityName(data.city);
         setCountry(data.countryName);
         setEmoji(convertToEmoji(data.countryCode));
       },
       setIsLoading,
-      null
+      setError
     );
   }, [lat, lng]);
+
+  if (error) {
+    return <Message message={error} />;
+  }
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <form className={styles.form}>

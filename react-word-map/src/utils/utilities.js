@@ -11,7 +11,7 @@ export function getData(url, setData, setIsLoading, setError) {
       setData(data);
     })
     .catch((error) => {
-      setError?.(error);
+      setError?.(error.message);
     })
     .finally(() => {
       setIsLoading?.(false);
