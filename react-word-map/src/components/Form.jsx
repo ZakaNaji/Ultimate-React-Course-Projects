@@ -32,6 +32,9 @@ function Form() {
 
   useEffect(() => {
     const url = `${BASE_URL}?latitude=${lat}&longitude=${lng}`;
+    if (!lat || !lng) {
+      return;
+    }
     setError("");
     getData(
       url,
@@ -54,6 +57,10 @@ function Form() {
 
   if (isLoading) {
     return <Spinner />;
+  }
+
+  if (!lat || !lng) {
+    return <Message message="Please select a location" />;
   }
 
   return (
