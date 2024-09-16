@@ -47,6 +47,66 @@
         "lng": 2.078727
       },
       "id": 98443198
+    },
+    {
+      "cityName": "Al Brouj",
+      "country": "Morocco",
+      "date": "2024-09-16T14:02:55.371Z",
+      "notes": "very nice trip",
+      "emoji": "🇲🇦",
+      "position": {
+        "lat": "32.501576246803495",
+        "lng": "-7.191971271759908"
+      },
+      "id": 98443199
+    },
+    {
+      "cityName": "London",
+      "country": "United Kingdom of Great Britain and Northern Ireland (the)",
+      "date": "2024-09-16T14:08:37.391Z",
+      "notes": "best trip ever",
+      "emoji": "🇬🇧",
+      "position": {
+        "lat": "51.48787546751627",
+        "lng": "-0.11535644531250001"
+      },
+      "id": 98443200
+    },
+    {
+      "cityName": "St. Cuthbert Out",
+      "country": "United Kingdom of Great Britain and Northern Ireland (the)",
+      "date": "2024-09-16T14:10:38.465Z",
+      "notes": "nice trip",
+      "emoji": "🇬🇧",
+      "position": {
+        "lat": "51.21675676098207",
+        "lng": "-2.6147460937500004"
+      },
+      "id": 98443201
+    },
+    {
+      "cityName": "Plymouth",
+      "country": "United Kingdom of Great Britain and Northern Ireland (the)",
+      "date": "2024-09-16T14:10:38.465Z",
+      "notes": "nice trip",
+      "emoji": "🇬🇧",
+      "position": {
+        "lat": "50.38332760460675",
+        "lng": "-4.115006203538243"
+      },
+      "id": 98443202
+    },
+    {
+      "cityName": "Reze",
+      "country": "France",
+      "date": "2024-09-16T14:11:37.099Z",
+      "notes": "chefs kiss",
+      "emoji": "🇫🇷",
+      "position": {
+        "lat": "47.19552443324099",
+        "lng": "-1.5545654296875002"
+      },
+      "id": 98443203
     }
   ]
 }

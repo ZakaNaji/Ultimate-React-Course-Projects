@@ -27,8 +27,34 @@ function CitiesProvider({ children }) {
     fetchData(`${BASE_URL}/cities`, setCities);
   }, []);
 
+  function createCity(city) {
+    setIsLoading(true);
+    fetch(`${BASE_URL}/cities`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(city),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setCities([...cities, data]);
+      })
+      .catch((error) => console.error(error))
+      .finally(() => setIsLoading(false));
+  }
+
   return (
-    <CitiesContext.Provider value={{ cities, isLoading, currentCity, getCity }}>
+    <CitiesContext.Provider
+      value={{
+        cities,
+        isLoading,
+        currentCity,
+        getCity,
+        createCity,
+        setIsLoading,
+      }}
+    >
       {children}
     </CitiesContext.Provider>
   );
