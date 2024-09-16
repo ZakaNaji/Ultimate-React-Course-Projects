@@ -44,6 +44,18 @@ function CitiesProvider({ children }) {
       .finally(() => setIsLoading(false));
   }
 
+  function deleteCity(id) {
+    setIsLoading(true);
+    fetch(`${BASE_URL}/cities/${id}`, {
+      method: "DELETE",
+    })
+      .then(() => {
+        setCities(cities.filter((city) => city.id !== id));
+      })
+      .catch((error) => console.error(error))
+      .finally(() => setIsLoading(false));
+  }
+
   return (
     <CitiesContext.Provider
       value={{
@@ -53,6 +65,7 @@ function CitiesProvider({ children }) {
         getCity,
         createCity,
         setIsLoading,
+        deleteCity,
       }}
     >
       {children}
