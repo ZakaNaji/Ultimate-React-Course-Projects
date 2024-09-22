@@ -1,13 +1,46 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
 
 const BASE_URL = "http://localhost:3001";
 
 const CitiesContext = createContext();
+const initialState = {
+  cities: [],
+  isLoading: false,
+  currentCity: {},
+};
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "SET_CITIES":
+      return { ...state, cities: action.payload };
+    case "SET_IS_LOADING":
+      return { ...state, isLoading: action.payload };
+    case "SET_CURRENT_CITY":
+      return { ...state, currentCity: action.payload };
+    default:
+      return state;
+  }
+};
 
 function CitiesProvider({ children }) {
-  const [cities, setCities] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [currentCity, setCurrentCity] = useState({});
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const { cities, isLoading, currentCity } = state;
+  const setIsLoading = (isLoading) => {
+    dispatch({ type: "SET_IS_LOADING", payload: isLoading });
+  };
+  const setCities = (cities) => {
+    dispatch({ type: "SET_CITIES", payload: cities });
+  };
+  const setCurrentCity = (city) => {
+    dispatch({ type: "SET_CURRENT_CITY", payload: city });
+  };
+
   const fetchData = async (url, setData) => {
     try {
       setIsLoading(true);
