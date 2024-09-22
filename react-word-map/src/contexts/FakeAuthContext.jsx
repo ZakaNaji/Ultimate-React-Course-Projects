@@ -1,6 +1,4 @@
-import { useReducer } from "react";
-
-const { createContext } = require("react");
+import { useReducer, createContext, useContext } from "react";
 
 const FAKE_USER = {
   name: "Jack",

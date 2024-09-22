@@ -13,6 +13,8 @@ import { useEffect, useState } from "react";
 import { useGeolocation } from "../hooks/useGeolocation";
 import Button from "./Button";
 import { useUrlLocation } from "../hooks/useUrlLocation";
+import User from "./User";
+import { useFakeAuth } from "../contexts/FakeAuthContext";
 
 export default function Map() {
   const navigate = useNavigate();
@@ -25,6 +27,8 @@ export default function Map() {
     position: geolocation,
     getPosition,
   } = useGeolocation();
+
+  const { user, isAuth, logout } = useFakeAuth();
 
   const [lat, lng] = useUrlLocation();
 
@@ -42,6 +46,7 @@ export default function Map() {
 
   return (
     <div className={styles.mapContainer}>
+      {isAuth && <User user={user} logout={logout} />}
       {!geolocation && (
         <Button onClick={getPosition} type="position">
           {isLoading ? "Loading..." : "Get Position"}
