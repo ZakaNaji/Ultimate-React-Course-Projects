@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./Login.module.css";
 import PageNav from "../components/PageNav";
 import { useFakeAuth } from "../contexts/FakeAuthContext";
@@ -10,14 +10,22 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { user, isAuth, login } = useFakeAuth();
+  const { isAuth, login } = useFakeAuth();
   const navigate = useNavigate();
   const handleSubmit = (e) => {
+    if (password === "" || email === "") {
+      alert("Please enter email and password");
+      return;
+    }
     e.preventDefault();
     login(email, password);
-    navigate("/app/cities");
   };
 
+  useEffect(() => {
+    if (isAuth) {
+      navigate("/app");
+    }
+  }, [isAuth, navigate]);
   //const { email: fakeEmail, password: fakePassword } = user;
   return (
     <main className={styles.login}>
