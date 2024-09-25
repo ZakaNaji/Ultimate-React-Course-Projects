@@ -1,5 +1,6 @@
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useReducer,
@@ -41,7 +42,7 @@ function CitiesProvider({ children }) {
     dispatch({ type: "SET_CURRENT_CITY", payload: city });
   };
 
-  const fetchData = async (url, setData) => {
+  const fetchData = useCallback(async (url, setData) => {
     try {
       setIsLoading(true);
       const resp = await fetch(url);
@@ -52,13 +53,15 @@ function CitiesProvider({ children }) {
     } finally {
       setIsLoading(false);
     }
-  };
-  const getCity = async (id) =>
-    fetchData(`${BASE_URL}/cities/${id}`, setCurrentCity);
+  }, []);
+  const getCity = useCallback(
+    async (id) => fetchData(`${BASE_URL}/cities/${id}`, setCurrentCity),
+    [fetchData]
+  );
 
   useEffect(() => {
     fetchData(`${BASE_URL}/cities`, setCities);
-  }, []);
+  }, [fetchData]);
 
   function createCity(city) {
     setIsLoading(true);
