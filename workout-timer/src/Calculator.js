@@ -17,6 +17,7 @@ function Calculator({ workouts, allowSound }) {
     [allowSound]
   );
 
+  //we implicitly created a problem by depending on playSound, bc each time we change allowSound(by clicking the btc), we reset the duration
   useEffect(() => {
     setDuration((number * sets * speed) / 60 + (sets - 1) * durationBreak);
     playSound();
