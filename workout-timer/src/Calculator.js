@@ -8,29 +8,26 @@ function Calculator({ workouts, allowSound }) {
   const [durationBreak, setDurationBreak] = useState(5);
   const [duration, setDuration] = useState(0);
 
-  const playSound = useCallback(
-    function () {
+  useEffect(() => {
+    function playSound() {
       if (!allowSound) return;
       const sound = new Audio(clickSound);
       sound.play();
-    },
-    [allowSound]
-  );
+    }
+    playSound();
+  }, [allowSound, duration]);
 
   //we implicitly created a problem by depending on playSound, bc each time we change allowSound(by clicking the btc), we reset the duration
   useEffect(() => {
     setDuration((number * sets * speed) / 60 + (sets - 1) * durationBreak);
-    playSound();
-  }, [number, sets, speed, durationBreak, playSound]);
+  }, [number, sets, speed, durationBreak]);
 
   const handleIncrement = function () {
     setDuration((prev) => Math.floor(prev + 1));
-    playSound();
   };
 
   const handleDecrement = function () {
     setDuration((prev) => (prev > 1 ? Math.ceil(prev - 1) : 0));
-    playSound();
   };
 
   //const duration = (number * sets * speed) / 60 + (sets - 1) * durationBreak;
