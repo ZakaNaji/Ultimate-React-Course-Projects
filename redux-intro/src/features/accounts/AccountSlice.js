@@ -20,9 +20,15 @@ export default function accountReducer(state = accountInitState, action) {
         ...state,
         loan: action.payload.loan,
         loanPurpose: action.payload.purpose,
+        amount: state.amount + action.payload.loan,
       };
     case "account/payLoan":
-      return { ...state, loan: 0, loanPurpose: "" };
+      return {
+        ...state,
+        loan: 0,
+        loanPurpose: "",
+        amount: state.amount - state.loan,
+      };
     default:
       return state;
   }
