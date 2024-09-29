@@ -1,12 +1,12 @@
-import { createStore } from "redux";
+import { combineReducers, createStore } from "redux";
 
-const initState = {
+const accountInitState = {
   amount: 0,
   loan: 0,
   loanPurpose: "",
 };
 
-const reducer = (state = initState, action) => {
+function accountReducer(state = accountInitState, action) {
   switch (action.type) {
     case "account/deposit":
       return { ...state, amount: state.amount + action.payload };
@@ -28,21 +28,62 @@ const reducer = (state = initState, action) => {
     default:
       return state;
   }
-};
-const store = createStore(reducer);
+}
 
 function diposit(amount) {
-  store.dispatch({ type: "account/deposit", payload: amount });
+  return { type: "account/deposit", payload: amount };
 }
 
 function withdraw(amount) {
-  store.dispatch({ type: "account/withdraw", payload: amount });
+  return { type: "account/withdraw", payload: amount };
 }
 
 function requestLoan(loan, purpose) {
-  store.dispatch({ type: "account/requestLoan", payload: { loan, purpose } });
+  return { type: "account/requestLoan", payload: { loan, purpose } };
 }
 
 function payLoan() {
-  store.dispatch({ type: "account/payLoan" });
+  return { type: "account/payLoan" };
 }
+
+const customerInitState = {
+  fullName: "",
+  nationalId: "",
+  createdAt: "",
+};
+
+function customerReducer(state = customerInitState, action) {
+  switch (action.type) {
+    case "customer/create":
+      return {
+        ...state,
+        fullName: action.payload.fullName,
+        nationalId: action.payload.nationalId,
+        createdAt: action.payload.createdAt,
+      };
+    case "customer/update":
+      return {
+        ...state,
+        fullName: action.payload.fullName,
+      };
+    default:
+      return state;
+  }
+}
+
+function createCustomer(fullName, nationalId) {
+  return {
+    type: "customer/create",
+    payload: { fullName, nationalId, createdAt: new Date().toISOString() },
+  };
+}
+
+function updateCustomer(fullName) {
+  return { type: "customer/update", payload: { fullName } };
+}
+
+const rootReducer = combineReducers({
+  account: accountReducer,
+  customer: customerReducer,
+});
+const store = createStore(rootReducer);
