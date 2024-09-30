@@ -13,8 +13,9 @@ function AccountOperations() {
   const account = useSelector((state) => state.account);
 
   function handleDeposit() {
-    dispatch(diposit(depositAmount));
+    dispatch(diposit(depositAmount, currency));
     setDepositAmount("");
+    setCurrency("USD");
   }
 
   function handleWithdrawal() {
