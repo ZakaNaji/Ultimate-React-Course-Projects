@@ -37,5 +37,18 @@ const accountSlice = createSlice({
   },
 });
 
-export const { diposit, withdraw, requestLoan, payLoan } = accountSlice.actions;
+export const { withdraw, requestLoan, payLoan } = accountSlice.actions;
+export function diposit(amount, currency) {
+  if (currency === "USD") {
+    return { type: "account/diposit", payload: amount };
+  }
+  return async (dispatch) => {
+    const resp = await fetch(
+      `https://api.frankfurter.app/latest?amount=${amount}&from=${currency}&to=USD`
+    );
+    const data = await resp.json();
+    const convertedAmount = data.rates.USD;
+    dispatch({ type: "account/diposit", payload: convertedAmount });
+  };
+}
 export default accountSlice.reducer;
