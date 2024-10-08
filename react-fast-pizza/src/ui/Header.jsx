@@ -4,7 +4,7 @@ import User from "./User";
 
 export default function Header() {
   return (
-    <header className="bg-yellow-500 uppercase">
+    <header className="bg-yellow-500 px-4 py-3 uppercase">
       <Link to="/" className="tracking-widest">
         React fast pizza Co.
       </Link>
