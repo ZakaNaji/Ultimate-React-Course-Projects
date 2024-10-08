@@ -1,3 +1,3 @@
 export default function Zakaria() {
-  return <div className="text-sm font-semibold">Zakaria</div>;
+  return <div className="hidden text-sm font-semibold">Zakaria</div>;
 }
