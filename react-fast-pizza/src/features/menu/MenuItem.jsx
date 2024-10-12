@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import Button from "../../ui/Button";
 import { formatCurrency } from "../../utils/helpers";
+import { addItem } from "../cart/cartSlice";
 
 function MenuItem({ pizza }) {
   const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
@@ -27,7 +28,22 @@ function MenuItem({ pizza }) {
             </p>
           )}
 
-          <Button type="small">Add to cart</Button>
+          <Button
+            type="small"
+            onClick={() =>
+              dispatch(
+                addItem({
+                  pizzaId: id,
+                  name,
+                  quantity: 1,
+                  unitPrice: Number(unitPrice),
+                  totalPrice: Number(unitPrice),
+                }),
+              )
+            }
+          >
+            Add to cart
+          </Button>
         </div>
       </div>
     </li>
