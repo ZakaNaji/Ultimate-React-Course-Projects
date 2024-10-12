@@ -1,8 +1,9 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { getCart } from "./cartSlice";
 
 function CartOverview() {
-  const { cart } = useSelector((state) => state.cart);
+  const cart = useSelector(getCart);
   const totalePizzas = cart.length;
   const totaleCost = cart.reduce((acc, curr) => acc + curr.totalPrice, 0);
   return (
