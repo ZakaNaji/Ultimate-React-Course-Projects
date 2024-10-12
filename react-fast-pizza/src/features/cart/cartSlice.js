@@ -31,6 +31,8 @@ const cartSlice = createSlice({
 });
 
 export const getCart = (state) => state.cart.cart;
+export const getQuantityById = (id) => (state) =>
+  state.cart.cart.find((item) => item.pizzaId === id)?.quantity ?? 0;
 
 export default cartSlice.reducer;
 
