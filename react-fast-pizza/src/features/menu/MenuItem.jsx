@@ -28,22 +28,24 @@ function MenuItem({ pizza }) {
             </p>
           )}
 
-          <Button
-            type="small"
-            onClick={() =>
-              dispatch(
-                addItem({
-                  pizzaId: id,
-                  name,
-                  quantity: 1,
-                  unitPrice: Number(unitPrice),
-                  totalPrice: Number(unitPrice),
-                }),
-              )
-            }
-          >
-            Add to cart
-          </Button>
+          {!soldOut && (
+            <Button
+              type="small"
+              onClick={() =>
+                dispatch(
+                  addItem({
+                    pizzaId: id,
+                    name,
+                    quantity: 1,
+                    unitPrice: Number(unitPrice),
+                    totalPrice: Number(unitPrice),
+                  }),
+                )
+              }
+            >
+              Add to cart
+            </Button>
+          )}
         </div>
       </div>
     </li>
